@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div th:switch="${cardapio}">
+    <h2 th:case="null">Ainda não há cardápio!</h2>
+    <div th:case="*">
+        <h2>Cardápio - <span th:text="${nomeRestaurante}"></span></h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Adicionar ao Pedido</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cardapio}">
+                <td th:text="${item.nome}"></td>
+                <td th:text="${item.descricao}"></td>
+                <td th:text="${item.preco}"></td>
+                <td><a th:href="@{/adicionarPedido/{id}(id=${item.id})}">Adicionar ao pedido</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/restaurantes">Listar restaurantes</a></p>
+    <p><a href="/pedido">Visualizar pedido</a></p>
+</div>
+</body>
+</html>
